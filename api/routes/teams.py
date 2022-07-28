@@ -1,7 +1,6 @@
 """
 platform starter kit teams api
 
-v1/teams            # list all teams
 v1/teams/{team_id}  # get team by id
 """
 from datetime import datetime
@@ -11,7 +10,7 @@ from ..config import settings
 route = APIRouter()
 
 @route.get("/{teamid}",
-           summary="Return Team info by id.",
+           summary="Return team info by id.",
            tags=["teams"],
            status_code=status.HTTP_200_OK
            )

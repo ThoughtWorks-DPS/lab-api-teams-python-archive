@@ -1,5 +1,5 @@
 """
-hello-restful api
+platform starter kit teams api
 
 teams api liveness and readiness endpoints.
 """
