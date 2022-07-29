@@ -29,5 +29,9 @@ class Settings(BaseSettings):
     releaseId: str = "0.0.0" # os.environ.get("API_VERSION")
     version: str = "v1"
 
+    dynamodb_table_name: str
+    dynamodb_url: str
+
+
 settings = Settings()
 route_prefix = f"/{settings.version}{settings.prefix}"
