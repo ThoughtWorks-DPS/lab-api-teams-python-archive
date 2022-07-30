@@ -2,7 +2,7 @@
 
 if [[ $1 == "UP" ]]; then
   echo "Starting localstack..."
-  TMPDIR=/private$TMPDIR docker-compose -f localstack.yaml up -d
+  TMPDIR=/private$TMPDIR docker-compose -f local/localstack.yaml up -d
   echo "Localstack started"
 elif [[ $1 == "DOWN" ]]; then
   echo "Stopping localstack..."

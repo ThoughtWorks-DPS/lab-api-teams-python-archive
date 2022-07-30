@@ -15,8 +15,22 @@
 
 ## local developement  
 
-**run locally with uvicorn**  
 
+### Setup dummy profile
+```
+./local/local_aws_creds.sh
+```
+### Startup Localstack
+```
+./local/localstack.sh UP
+```
+### Create dynamodb table in localstack
+```
+export AWS_PROFILE=test-profile
+./local/local_prestart.sh
+```
+
+**run locally with uvicorn**  
 ```
 $ uvicorn api.main:api --reload
 ```
