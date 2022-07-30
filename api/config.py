@@ -28,9 +28,13 @@ class Settings(BaseSettings):
     debug: bool = False
     releaseId: str = "0.0.0" # os.environ.get("API_VERSION")
     version: str = "v1"
+    logger: str = "teams-logger"
 
     dynamodb_table_name: str
     dynamodb_url: str
+
+    class Config:
+      env_file = '.env'
 
 
 settings = Settings()

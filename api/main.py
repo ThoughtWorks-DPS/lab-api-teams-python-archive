@@ -32,6 +32,8 @@ api = FastAPI(
 )
 json_logging.init_fastapi(enable_json=True)
 json_logging.init_request_instrument(api)
+logger = logging.getLogger(settings.logger)
+logger.setLevel(logging.DEBUG)
 
 client = boto3.client("sns", endpoint_url="http://localhost:4566", region_name="us-east-2")
 topic = client.create_topic(Name='TeamsEvents', Attributes={'FifoQueue': 'true'})

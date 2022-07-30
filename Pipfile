@@ -16,6 +16,7 @@ pre-commit = "*"
 pytest = "*"
 pylint = "*"
 coverage = "*"
+moto = "*"
 
 [requires]
 python_version = "3.9"
