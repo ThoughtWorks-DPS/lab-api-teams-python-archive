@@ -15,4 +15,7 @@ class TeamService():
             self.repository.put(new_team)
             return new_team
         else:
-            raise ApiException(detail=DUPLICATE_TEAM_ERROR_DETAIL.format(team_name), status_code=409, title=DUPLICATE_TEAM_TITLE)
+            raise ApiException(detail=DUPLICATE_TEAM_ERROR_DETAIL.format(team_name),
+                                status_code=409,
+                                title=DUPLICATE_TEAM_TITLE
+             )
