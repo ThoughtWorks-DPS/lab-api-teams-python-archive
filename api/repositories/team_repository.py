@@ -14,19 +14,13 @@ class TeamRepository:
             self.table = aws_resource
 
     def put(self, resource: Team) -> bool:
-        response = self.table.put_item(Item=resource.dict())
-        self.logger.debug(response)
-        status_code = response['ResponseMetadata']['HTTPStatusCode']
-        if status_code == 200:
-            return True
-        else:
-            return False
+        self.table.put_item(Item=resource.dict())
 
-    def delete(self, tableName, resource: Team):
-        self.table.delete_item(TableName=tableName, Key=resource.dict())
+    def delete(self, table_name: str, resource: Team):
+        self.table.delete_item(TableName=table_name, Key=resource.dict())
 
-    def get(self, resource_id: str) -> Team:
-        response = self.table.get_item(Key={'name': resource_id})
+    def get(self, team_name: str) -> Team:
+        response = self.table.get_item(Key={'name': team_name})
         if 'Item' in response:
             return Team(**response['Item'])
         return None

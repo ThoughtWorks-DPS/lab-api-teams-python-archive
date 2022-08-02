@@ -37,12 +37,23 @@ class TestTeamRepository:
         yield table
         table.delete()
 
-    def test_put_team(self, mock_dynamo_table):
+    def test_put_team_should_persist_to_dynamodb(self, mock_dynamo_table):
         repository = TeamRepository(mock_dynamo_table)
-        test_team = Team(name="Patrick")
+        test_team = Team(name="dps1")
 
         repository.put(test_team)
-
         found_team = mock_dynamo_table.get_item(Key={'name': test_team.name})['Item']['name']
+
         assert found_team is not None
         assert test_team.name == found_team
+
+    def test_delete_team_should_remove_from_dynamodb(self, mock_dynamo_table):
+        repository =  TeamRepository(mock_dynamo_table)
+        test_team = Team(name="dps1")
+        mock_dynamo_table.put_item(Item=test_team.dict())
+        found_team = mock_dynamo_table.get_item(Key={'name': test_team.name})['Item']['name']
+        assert found_team == "dps1"
+
+        repository.delete(mock_dynamo_table.name, test_team)
+
+        assert repository.get(test_team.name) is None
