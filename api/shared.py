@@ -1,6 +1,13 @@
-import json_logging, logging
-import sys
+"""
+Shared code
 
-logger = logging.getLogger("teams-logger")
+Handles logging setup
+"""
+import sys
+import logging
+
+from api.config import settings
+
+logger = logging.getLogger(settings.logger)
 logger.setLevel(logging.INFO)
 logger.addHandler(logging.StreamHandler(sys.stdout))

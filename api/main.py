@@ -3,15 +3,10 @@ platform starter kit teams api
 
 Manages Team data and environment configurations for a platform.
 """
-import sys
 from fastapi import FastAPI
-import json_logging, logging
-from .shared import logger
-#from opentelemetry.instrumentation.fastapi import FastAPIInstrumentor
+import json_logging
 from .routes import healthz, teams, webhook
 from .config import settings, route_prefix
-import boto3
-from botocore.exceptions import ClientError
 
 tags_metadata = [
     {
@@ -32,8 +27,6 @@ api = FastAPI(
 )
 json_logging.init_fastapi(enable_json=True)
 json_logging.init_request_instrument(api)
-logger = logging.getLogger(settings.logger)
-logger.setLevel(logging.DEBUG)
 
 # client = boto3.client("sns", endpoint_url="http://localhost:4566", region_name="us-east-2")
 # topic = client.create_topic(Name='TeamsEvents', Attributes={'FifoQueue': 'true'})

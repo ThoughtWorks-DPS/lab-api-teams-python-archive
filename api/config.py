@@ -34,7 +34,8 @@ class Settings(BaseSettings):
     dynamodb_url: str
 
     class Config:
-      env_file = '.env'
+        """Default env file"""
+        env_file = '.env'
 
 
 settings = Settings()

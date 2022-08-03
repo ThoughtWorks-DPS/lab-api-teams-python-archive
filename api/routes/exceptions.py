@@ -1,21 +1,29 @@
+"""
+Module for tracking exceptions
+"""
 from typing import List, Optional
 
+from fastapi import HTTPException
 
+
+# pylint: disable=too-few-public-methods
 class InvalidParams:
+    """Object for managing incorrect parameters"""
     def __init__(self, field, code, message):
         self.field = field
         self.code = code
         self.message = message
 
-class ApiException(Exception):
+# pylint: disable=too-few-public-methods
+class ApiException(HTTPException):
+    """Exception for an error that will be returned by the API"""
     def __init__(
             self,
             status_code,
             title,
             detail,
-            invalid_params: Optional[List[InvalidParams]] = [InvalidParams(None, None, None)]
+            invalid_params: Optional[List[InvalidParams]] = None
     ):
-        self.status_code = status_code
         self.title = title
-        self.detail = detail
         self.invalid_params = invalid_params
+        super().__init__(status_code=status_code, detail=detail)
