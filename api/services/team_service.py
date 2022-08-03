@@ -1,3 +1,5 @@
+from fastapi import status
+
 from api.models.team import Team
 from api.repositories.team_repository import TeamRepository
 from api.routes.exceptions import ApiException
@@ -16,6 +18,6 @@ class TeamService():
             return new_team
         else:
             raise ApiException(detail=DUPLICATE_TEAM_ERROR_DETAIL.format(team_name),
-                                status_code=409,
+                                status_code=status.HTTP_409_CONFLICT,
                                 title=DUPLICATE_TEAM_TITLE
              )

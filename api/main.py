@@ -35,13 +35,13 @@ json_logging.init_request_instrument(api)
 logger = logging.getLogger(settings.logger)
 logger.setLevel(logging.DEBUG)
 
-client = boto3.client("sns", endpoint_url="http://localhost:4566", region_name="us-east-2")
-topic = client.create_topic(Name='TeamsEvents', Attributes={'FifoQueue': 'true'})
-response = client.subscribe(
-    TopicArn=topic['TopicArn'],
-    Protocol='http',
-    Endpoint='http://localhost:8000/v1/teams/webhook/listener',
-)
+# client = boto3.client("sns", endpoint_url="http://localhost:4566", region_name="us-east-2")
+# topic = client.create_topic(Name='TeamsEvents', Attributes={'FifoQueue': 'true'})
+# response = client.subscribe(
+#     TopicArn=topic['TopicArn'],
+#     Protocol='http',
+#     Endpoint='http://localhost:8000/v1/teams/webhook/listener',
+# )
 
 api.include_router(teams.route, prefix=route_prefix)
 api.include_router(healthz.route, prefix=route_prefix)
