@@ -14,3 +14,5 @@ env.bak/
 venv.bak/
 
 **/.DS_STORE
+.coverage
+coverage.xml

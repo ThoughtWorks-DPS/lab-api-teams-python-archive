@@ -50,6 +50,11 @@ workflows:
           report-coverage: codeclimate
           cis-docker-image-scan: true
           executor-image: twdps/circleci-python-builder:0.2.0
+          install-dev: true
+          after-checkout:
+            - run:
+                name: copy over local environment
+                command: cp local/local.env .env
           filters: *on-push-main
 
       - python/secure-image-build:
