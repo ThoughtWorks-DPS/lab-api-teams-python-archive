@@ -9,7 +9,7 @@ uvicorn = "*"
 opentelemetry-instrumentation-fastapi = "*"
 boto3 = "*"
 json-logging = "*"
-pydantic = "*"
+pydantic = { version = "*", extras = ['dotenv'] }
 
 [dev-packages]
 pre-commit = "*"
