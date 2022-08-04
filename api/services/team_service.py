@@ -12,8 +12,11 @@ DUPLICATE_TEAM_ERROR_DETAIL = 'Team %s already exists'
 
 class TeamService():
     """Service for managing team CRUD"""
-    def __init__(self, team_repository = TeamRepository()) -> None:
-        self.repository = team_repository
+    def __init__(self, team_repository = None) -> None:
+        if team_repository is None:
+            self.repository = TeamRepository()
+        else:
+            self.repository = team_repository
 
     def create_team(self, team_name: str) -> Team:
         """
