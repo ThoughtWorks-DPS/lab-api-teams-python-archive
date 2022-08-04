@@ -47,8 +47,7 @@ workflows:
           context: << pipeline.parameters.context >>
           package-manager: << pipeline.parameters.package-manager >>
           lint-path: api
-          # Need to setup project in codeclimate
-          # report-coverage: codeclimate
+          report-coverage: codeclimate
           cis-docker-image-scan: true
           executor-image: twdps/circleci-python-builder:0.2.0
           install-dev: true
@@ -58,31 +57,31 @@ workflows:
                 command: cp local/local.env .env
           filters: *on-push-main
 
-      - python/secure-image-build:
-          name: secure-build
-          context: << pipeline.parameters.context >>
-          shell: /bin/bash
-          python-version: "3.9.10"
-          before-build:
-            - run:
-                name: inject environment variables
-                command: |
-                  op inject -i op.env -o $BASH_ENV
-                  source $BASH_ENV
-                  op inject -i cosign.key.env -o cosign.key
-                  op inject -i cosign.pub.env -o cosign.pub
-          registry: << pipeline.parameters.registry >>
-          image: lab-api-teams
-          image-cve-scan: true
-          snyk-organization: twdps
-          health-url: "http://0.0.0.0:8000/v1/teams/healthz"
-          port-definition: "8000:8000"
-          after-push:
-            - cosign/install
-            - cosign/sign:
-                registry: << pipeline.parameters.registry >>
-                image: lab-api-teams
-                tag: dev.${CIRCLE_SHA1:0:7}
-          requires:
-            - static-code-analysis
-          filters: *on-push-main
+      # - python/secure-image-build:
+      #     name: secure-build
+      #     context: << pipeline.parameters.context >>
+      #     shell: /bin/bash
+      #     python-version: "3.9.10"
+      #     before-build:
+      #       - run:
+      #           name: inject environment variables
+      #           command: |
+      #             op inject -i op.env -o $BASH_ENV
+      #             source $BASH_ENV
+      #             op inject -i cosign.key.env -o cosign.key
+      #             op inject -i cosign.pub.env -o cosign.pub
+      #     registry: << pipeline.parameters.registry >>
+      #     image: lab-api-teams
+      #     image-cve-scan: true
+      #     snyk-organization: twdps
+      #     health-url: "http://0.0.0.0:8000/v1/teams/healthz"
+      #     port-definition: "8000:8000"
+      #     after-push:
+      #       - cosign/install
+      #       - cosign/sign:
+      #           registry: << pipeline.parameters.registry >>
+      #           image: lab-api-teams
+      #           tag: dev.${CIRCLE_SHA1:0:7}
+      #     requires:
+      #       - static-code-analysis
+      #     filters: *on-push-main
