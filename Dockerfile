@@ -16,10 +16,13 @@ RUN apk add --no-cache \
         cmake==3.23.1-r0 \
         make==4.3-r0 \
         musl==1.2.3-r0 \
+
         musl-dev==1.2.3-r0 \
         musl-utils==1.2.3-r0 \
         gcc==11.2.1_git20220219-r2 \
         gettext-dev==0.21-r2 && \
+        # Fixing vulnerability from base image python:3.9-alpine
+        libtirpc==1.3.2-r1 \
     wget -q https://gitlab.com/rilian-la-te/musl-locales/-/archive/master/musl-locales-master.zip && \
     unzip musl-locales-master.zip && cd musl-locales-master && \
     cmake -DLOCALE_PROFILE=OFF -D CMAKE_INSTALL_PREFIX:PATH=/usr . && \
