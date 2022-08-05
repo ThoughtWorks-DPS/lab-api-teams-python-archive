@@ -73,6 +73,7 @@ workflows:
           registry: << pipeline.parameters.registry >>
           image: lab-api-teams
           image-cve-scan: true
+          skip-base-image: true
           snyk-organization: twdps
           health-url: "http://0.0.0.0:8000/v1/teams/healthz"
           port-definition: "8000:8000"
