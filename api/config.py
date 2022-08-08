@@ -30,8 +30,8 @@ class Settings(BaseSettings):
     version: str = "v1"
     logger: str = "teams-logger"
 
-    dynamodb_table_name: str
-    dynamodb_url: str
+    dynamodb_table_name: str = "teams"
+    dynamodb_url: str = "http://localhost:4566"
 
     class Config:
         """Default env file"""
