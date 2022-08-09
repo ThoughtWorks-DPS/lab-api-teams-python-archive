@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "{{ include "lab-api-teams.fullname" . }}-test-connection"
+  labels:
+    {{- include "lab-api-teams.labels" . | nindent 4 }}
+  annotations:
+    "helm.sh/hook": test
+spec:
+  containers:
+    - name: wget
+      image: busybox
+      command: ['wget']
+      args: ['{{ include "lab-api-teams.fullname" . }}:{{ .Values.service.port }}/v1/teams']
+  restartPolicy: Never
