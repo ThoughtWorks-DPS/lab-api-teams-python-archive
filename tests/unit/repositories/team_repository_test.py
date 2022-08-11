@@ -1,4 +1,5 @@
 import os
+from unittest import mock
 from moto import mock_dynamodb
 import boto3, json, pytest
 from api.models.team import Team
@@ -62,6 +63,26 @@ class TestTeamRepository:
         found_team = mock_dynamo_table.get_item(Key={'name': test_team.name})['Item']['name']
         assert found_team == "dps1"
 
-        repository.delete(mock_dynamo_table.name, test_team)
+        repository.delete(test_team)
 
         assert repository.get(test_team.name) is None
+
+    def test_get_all_should_return_a_list_of_teams(self, mock_dynamo_table):
+        repository = TeamRepository(mock_dynamo_table)
+        test_team_1 = Team(name="dps1")
+        test_team_2 = Team(name="dps2")
+        mock_dynamo_table.put_item(Item=test_team_1.dict())
+        mock_dynamo_table.put_item(Item=test_team_2.dict())
+
+        found_teams = repository.get_all()
+
+        assert len(found_teams) == 2
+        assert test_team_1 in found_teams
+        assert test_team_2 in found_teams
+
+    def test_get_all_should_return_empty_list_if_no_teams(self, mock_dynamo_table):
+        repository = TeamRepository(mock_dynamo_table)
+
+        found_teams = repository.get_all()
+
+        assert len(found_teams) == 0

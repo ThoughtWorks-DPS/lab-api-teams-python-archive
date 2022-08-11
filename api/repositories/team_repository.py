@@ -23,8 +23,10 @@ class TeamRepository:
         if aws_resource == '':
             dynamodb = boto3.resource('dynamodb', endpoint_url=settings.dynamodb_url)
             self.table = dynamodb.Table(settings.dynamodb_table_name)
+            self.table_name = settings.dynamodb_table_name
         else:
             self.table = aws_resource
+            self.table_name = aws_resource.name
 
     def put(self, team: Team):
         """
@@ -38,18 +40,17 @@ class TeamRepository:
         """
         self.table.put_item(Item=team.dict())
 
-    def delete(self, table_name: str, resource: Team):
+    def delete(self, resource: Team):
         """
         Delete a team
 
         Args:
-            table_name: the name of the table to operate on, always 'team'
             team: an object represetnation of the team
 
         Returns:
             Nothing
         """
-        self.table.delete_item(TableName=table_name, Key=resource.dict())
+        self.table.delete_item(TableName=self.table_name, Key=resource.dict())
 
     def get(self, team_name: str) -> Team:
         """
