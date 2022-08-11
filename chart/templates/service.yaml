@@ -13,3 +13,25 @@ spec:
       name: http
   selector:
     {{- include "lab-api-teams.selectorLabels" . | nindent 4 }}
+---
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: {{ include "lab-api-teams.fullname" . }}
+spec:
+  {{- with .Values.hosts }}
+  hosts:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+ {{- with .Values.gateways }}
+  gateways:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+  http:
+    - name: "root"
+      match:
+        - uri:
+            prefix: "/"
+      route:
+        - destination:
+            host: {{ include "lab-api-teams.fullname" . }}

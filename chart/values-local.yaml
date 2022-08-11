@@ -1,0 +1,4 @@
+hosts:
+  - local.mcfadden.local
+gateways:
+  - istio-system/local-gateway
