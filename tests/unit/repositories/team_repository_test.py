@@ -63,7 +63,7 @@ class TestTeamRepository:
         found_team = mock_dynamo_table.get_item(Key={'name': test_team.name})['Item']['name']
         assert found_team == "dps1"
 
-        repository.delete(test_team)
+        repository.delete(test_team.name)
 
         assert repository.get(test_team.name) is None
 

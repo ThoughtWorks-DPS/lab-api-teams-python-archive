@@ -11,10 +11,7 @@ def mock_return_team_service(**kwargs):
     def return_stubbed_team_service():
         mock_team_service = MagicMock()
         mock_team_service.create_team.return_value = kwargs.get("create_team")
-        mock_team_service.get_teams.return_value = kwargs.get("get_teams")
-        mock_team_service.get_team.return_value = kwargs.get("get_team")
-        mock_team_service.update_team.return_value = kwargs.get("update_team")
-        mock_team_service.create_team_namespace.return_value = kwargs.get("create_team_namespace")
+        mock_team_service.delete_team.return_value = kwargs.get("delete_team")
         return mock_team_service
 
     return return_stubbed_team_service
@@ -27,3 +24,10 @@ class TestTeamsRoutes:
 
         assert response.status_code == 201
         assert response.json()["name"] == team.name
+
+    def test_delete_team_returns_204(self):
+        team = Team(name='dps1')
+        api.dependency_overrides[get_team_service] = mock_return_team_service(delete_team=True)
+        response = test_client.delete(f'/v1/teams/{team.name}')
+
+        assert response.status_code == 204

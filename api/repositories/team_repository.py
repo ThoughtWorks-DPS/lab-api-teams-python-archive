@@ -40,17 +40,17 @@ class TeamRepository:
         """
         self.table.put_item(Item=team.dict())
 
-    def delete(self, resource: Team):
+    def delete(self, team_name: str):
         """
         Delete a team
 
         Args:
-            team: an object represetnation of the team
+            team_name (str): an object represetnation of the team
 
         Returns:
             Nothing
         """
-        self.table.delete_item(TableName=self.table_name, Key=resource.dict())
+        self.table.delete_item(TableName=self.table_name, Key={'name': team_name})
 
     def get(self, team_name: str) -> Team:
         """

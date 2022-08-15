@@ -11,6 +11,7 @@ from ..config import settings
 from ..models.team import Team, TeamReponse, team_responses
 
 route = APIRouter()
+logger = logging.getLogger(settings.logger)
 
 @route.get("/{teamid}",
            summary="Return team info by id.",
@@ -37,7 +38,18 @@ async def create_team(team: Team, team_service=Depends(get_team_service)):
     Returns 201 if successfully created
     Returns 409 if team already exists with that name
     """
-    logger = logging.getLogger(settings.logger)
     logger.debug('Team Name: %s', team)
     created_team: Team = team_service.create_team(team.name)
     return TeamReponse(name=created_team.name)
+
+@route.delete("/{team_name}",
+            summary="Delete a team.",
+            tags=["teams"],
+            status_code=status.HTTP_204_NO_CONTENT)
+async def delete_team(team_name: str, team_service=Depends(get_team_service)):
+    """
+    Returns 204 if successfully deleted
+    """
+    logger.debug('Deleting team: %s', team_name)
+    team_service.delete_team(team_name)
+    return {}

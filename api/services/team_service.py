@@ -23,7 +23,7 @@ class TeamService():
         Create a team
 
         Args:
-            team_name (str) = Name of the team to create
+            team_name (str): Name of the team to create
 
         Returns:
             a Team object with the given name
@@ -39,5 +39,15 @@ class TeamService():
                             status_code=status.HTTP_409_CONFLICT,
                             title=DUPLICATE_TEAM_TITLE
             )
-    def delete_team(self) -> bool:
-        """Delete a team"""
+    def delete_team(self, team_name:  str) -> bool:
+        """
+        Delete a team
+
+        Args:
+            team_name (str): Name of team to be deleted
+
+        Returns:
+            bool if the deletion was successful
+        """
+        self.repository.delete(team_name)
+        return True
