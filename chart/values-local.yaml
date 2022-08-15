@@ -1,4 +1,5 @@
 hosts:
-  - local.mcfadden.local
+  - "*"
 gateways:
   - istio-system/local-gateway
+jwt_issuer: https://twdpsio.us.auth0.com/
