@@ -7,7 +7,8 @@ import input.attributes.request.http as http_request
 
 default allow = false
 
-issuer := "https://twdpsio.us.auth0.com/"
+issuer   := "https://twdpsio.us.auth0.com/"
+audience := "w47MtsmRGb3DDTKqWdXMy9L7KudD5nDq"
 
 metadata_discovery(iss) = http.send({
     "url": concat("", [iss, ".well-known/openid-configuration"]),
@@ -31,7 +32,7 @@ jwks := jwks_request(jwks_endpoint).raw_body
 
 is_valid := io.jwt.decode_verify(bearer_token, {
         "time": time.now_ns(),
-        "aud": "w47MtsmRGb3DDTKqWdXMy9L7KudD5nDq",
+        "aud": audience,
         "cert": jwks,
         "iss": issuer
     })[0]
