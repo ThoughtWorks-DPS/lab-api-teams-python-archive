@@ -1,6 +1,7 @@
 """
 Service for managing team CRUD
 """
+from typing import List
 from fastapi import status
 
 from api.models.team import Team
@@ -51,3 +52,15 @@ class TeamService():
         """
         self.repository.delete(team_name)
         return True
+
+    def get_all(self) -> List[Team]:
+        """
+        Get all current teams
+
+        Args:
+            None
+
+        Returns:
+            A list of all teams in the repository
+        """
+        return self.repository.get_all()

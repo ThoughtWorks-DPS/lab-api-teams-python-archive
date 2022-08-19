@@ -16,3 +16,4 @@ venv.bak/
 **/.DS_STORE
 .coverage
 coverage.xml
+tags

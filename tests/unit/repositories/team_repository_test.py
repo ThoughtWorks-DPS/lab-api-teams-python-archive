@@ -1,5 +1,4 @@
 import os
-from unittest import mock
 from moto import mock_dynamodb
 import boto3, json, pytest
 from api.models.team import Team
