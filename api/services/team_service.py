@@ -64,3 +64,16 @@ class TeamService():
             A list of all teams in the repository
         """
         return self.repository.get_all()
+
+    def get(self, team_name: str) -> Team:
+        """
+        Get a team
+
+        Args:
+            team_name (str): Name of team to be found
+
+        Returns:
+            Team if a team is found
+            None if no team is found
+        """
+        return self.repository.get(team_name)

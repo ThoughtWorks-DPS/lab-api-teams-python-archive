@@ -54,3 +54,22 @@ class TestsTeamService:
         assert team1 in teams
         assert isinstance(teams[0], Team)
         assert team2 in teams
+
+    def test_get_should_return_team_with_given_name(self):
+        mock_team_repository = MagicMock()
+        team1 = TeamBuilder().with_name('dps1').build()
+        mock_team_repository.get.return_value = team1
+        service = TeamService(mock_team_repository)
+
+        found_team = service.get(team1.name)
+
+        assert team1 == found_team
+
+    def test_get_should_return_none_if_no_name_found(self):
+        mock_team_repository = MagicMock()
+        mock_team_repository.get.return_value = None
+        service = TeamService(mock_team_repository)
+
+        found_team = service.get('non-existant-name')
+
+        assert found_team == None
