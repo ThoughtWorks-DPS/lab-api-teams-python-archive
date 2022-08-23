@@ -11,9 +11,10 @@ from api.routes.exceptions import ApiException
 DUPLICATE_TEAM_TITLE = 'Team already exists'
 DUPLICATE_TEAM_ERROR_DETAIL = 'Team %s already exists'
 
+
 class TeamService():
     """Service for managing team CRUD"""
-    def __init__(self, team_repository = None) -> None:
+    def __init__(self, team_repository=None) -> None:
         if team_repository is None:
             self.repository = TeamRepository()
         else:
@@ -37,9 +38,10 @@ class TeamService():
             self.repository.put(new_team)
             return new_team
         raise ApiException(detail=DUPLICATE_TEAM_ERROR_DETAIL.format(team_name),
-                            status_code=status.HTTP_409_CONFLICT,
-                            title=DUPLICATE_TEAM_TITLE
-            )
+                           status_code=status.HTTP_409_CONFLICT,
+                           title=DUPLICATE_TEAM_TITLE
+                           )
+
     def delete_team(self, team_name:  str) -> bool:
         """
         Delete a team

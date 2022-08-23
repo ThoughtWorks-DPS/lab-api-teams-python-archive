@@ -14,6 +14,7 @@ class InvalidParams:
         self.code = code
         self.message = message
 
+
 # pylint: disable=too-few-public-methods
 class ApiException(HTTPException):
     """Exception for an error that will be returned by the API"""
