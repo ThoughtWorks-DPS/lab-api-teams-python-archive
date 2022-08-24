@@ -9,5 +9,5 @@ import logging
 from api.config import settings
 
 logger = logging.getLogger(settings.logger)
-logger.setLevel(logging.INFO)
+logger.setLevel(settings.log_level)
 logger.addHandler(logging.StreamHandler(sys.stdout))

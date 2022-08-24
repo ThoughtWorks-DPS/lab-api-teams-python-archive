@@ -46,7 +46,7 @@ async def print_incoming_request(request: Request, call_next):
 
 if settings.subscribe_to_topic:
     client = boto3.client("sns", endpoint_url="http://localhost:4566", region_name="us-east-1")
-    print(f"Subscribing to topic {settings.topic_arn}")
+    logger.debug("Subscribing to topic %s", settings.topic_arn)
     response = client.subscribe(
         TopicArn=settings.topic_arn,
         Protocol='http',

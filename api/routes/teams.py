@@ -3,16 +3,14 @@ platform starter kit teams api
 
 v1/teams/{team_id}  # get team by id
 """
-import logging
 from fastapi import APIRouter, Depends, status
 
 from api.dependencies import get_team_service
 from api.routes.exceptions import ApiException
-from ..config import settings
-from ..models.team import Team, TeamResponse, team_responses
+from api.shared import logger
+from api.models.team import Team, TeamResponse, team_responses
 
 route = APIRouter()
-logger = logging.getLogger(settings.logger)
 
 NO_TEAM_ERROR_DETAIL = "Team %s was not found"
 TEAM_NOT_FOUND_TITLE = "Team not found"

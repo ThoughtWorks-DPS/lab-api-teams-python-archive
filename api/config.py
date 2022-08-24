@@ -3,6 +3,7 @@ platform starter kit teams api
 
 api base configuration
 """
+from json_logging import logging
 from pydantic import BaseSettings
 
 # pylint: disable=line-too-long
@@ -35,6 +36,7 @@ class Settings(BaseSettings):
     subscribe_to_topic: bool = True
     topic_arn: str = ""
     webhook_endpoint: str = ""
+    log_level: int = logging.INFO
 
     class Config:
         """Default env file"""
