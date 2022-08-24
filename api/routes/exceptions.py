@@ -33,8 +33,7 @@ class ApiException(HTTPException):
         super().__init__(status_code=status_code, detail=detail)
 
 
-def custom_validation_exception_handler(request: Request, exc: RequestValidationError):
-    # pylint: disable=unused-argument
+def custom_validation_exception_handler(__request__: Request, exc: RequestValidationError):
     """Catch 422's and provide additional field validation information"""
     invalid_params_list = []
     for param in exc.errors():
