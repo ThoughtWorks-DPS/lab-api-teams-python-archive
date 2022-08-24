@@ -1,4 +1,4 @@
-
+#!/bin/bash
 
 if [[ $1 == "UP" ]]; then
   echo "Starting localstack..."
@@ -6,7 +6,7 @@ if [[ $1 == "UP" ]]; then
   echo "Localstack started"
 elif [[ $1 == "DOWN" ]]; then
   echo "Stopping localstack..."
-  docker-compose -f localstack.yaml down
+  docker-compose -f local/localstack.yaml down
   echo "Localstack stopped"
 else
   echo "Usage: ./localstack.sh [UP|DOWN]"
