@@ -17,3 +17,6 @@ venv.bak/
 .coverage
 coverage.xml
 tags
+.terraform/
+*.tfstate
+*.tfstate.backup
