@@ -33,7 +33,7 @@ class Settings(BaseSettings):
     logger: str = "teams-logger"
     dynamodb_table_name: str = "teams"
     dynamodb_url: str = "http://localhost:4566"
-    subscribe_to_topic: bool = True
+    subscribe_to_topic: bool = False
     topic_arn: str = ""
     webhook_endpoint: str = ""
     log_level: int = logging.INFO
