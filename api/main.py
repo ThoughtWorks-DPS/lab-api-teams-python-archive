@@ -3,7 +3,7 @@ platform starter kit teams api
 
 Manages Team data and environment configurations for a platform.
 """
-from fastapi import FastAPI, Depends, Request
+from fastapi import FastAPI, Depends
 import json_logging
 import boto3
 
@@ -33,15 +33,16 @@ api = FastAPI(
 json_logging.init_fastapi(enable_json=True)
 json_logging.init_request_instrument(api)
 
-@api.middleware("http")
-async def print_incoming_request(request: Request, call_next):
-    logger.info(request.headers)
-    if request.headers.get('x-amz-sns-message-type') == 'Notification':
-        new_headers = request.headers.mutablecopy()
-        new_headers['content-type'] = 'application/json'
-        request._headers = new_headers
-        request.scope.update(headers=request.headers.raw)
-    return await call_next(request)
+# @api.middleware("http")
+# async def print_incoming_request(request: Request, call_next):
+#     """change SNS notifications to have content-type as application/json"""
+#     if request.headers.get('x-amz-sns-message-type') == 'Notification':
+#         new_headers = request.headers.mutablecopy()
+#         new_headers['content-type'] = 'application/json'
+#         # pylint: disable=protected-access
+#         request._headers = new_headers
+#         request.scope.update(headers=request.headers.raw)
+#     return await call_next(request)
 
 
 if settings.subscribe_to_topic:
