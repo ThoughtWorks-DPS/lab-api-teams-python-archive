@@ -18,7 +18,7 @@ Follow the below instructions to run the teams api on your machine.
 
 ## Local Setup
 
-- [python-version 3+](./python-version)
+- [python-version 3+](https://github.com/ThoughtWorks-DPS/lab-api-teams/blob/main/.python-version)
 - [pipenv](https://pipenv.pypa.io/en/latest/)
 - [awscli](https://aws.amazon.com/cli/)
   - note: if you manage your python versions with something like pyenv, make sure you install awscli with pip, not homebrew. 
