@@ -12,8 +12,17 @@
 
 
 
-
 # local developement
+
+Follow the below instructions to run the teams api on your machine. 
+
+## Local Setup
+
+- [python-version 3+](./python-version)
+- [pipenv](https://pipenv.pypa.io/en/latest/)
+- [awscli](https://aws.amazon.com/cli/)
+  - note: if you manage your python versions with something like pyenv, make sure you install awscli with pip, not homebrew. 
+
 
 ```bash
 # Install dependencies
@@ -32,6 +41,6 @@ pipenv shell
 export AWS_PROFILE=test-profile
 ./local/local_prestart.sh
 
-#un locally with uvicorn#
+# Run locally with uvicorn#
 uvicorn api.main:api --reload
 ```
