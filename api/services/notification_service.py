@@ -9,8 +9,11 @@ SUBSCRIPTION_CONFIRMATION = 'SubscriptionConfirmation'
 NOTIFICATION = 'Notification'
 SYNC_ALL_TEAMS = 'ALL'
 
-
+# pylint: disable=too-few-public-methods
 class NotificationService:
+    """
+    Service for managing SNS notifications both parsing and notifying
+    """
 
     def __init__(self, team_service: TeamService) -> None:
         self.team_service = team_service
