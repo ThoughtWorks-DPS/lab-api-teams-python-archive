@@ -57,8 +57,9 @@ class TestTeamRepository:
         repository = TeamRepository(mock_dynamo_table)
         test_team = Team(name="dps1")
         mock_dynamo_table.put_item(Item=test_team.dict())
-
-        assert repository.get(test_team.name).name == test_team.name
+        found_team = repository.get(test_team.name)
+        assert found_team is not None
+        assert found_team.name == test_team.name
 
     def test_delete_team_should_remove_from_dynamodb(self, mock_dynamo_table):
         repository =  TeamRepository(mock_dynamo_table)
