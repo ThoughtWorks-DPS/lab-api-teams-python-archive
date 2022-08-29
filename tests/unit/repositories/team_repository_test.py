@@ -1,6 +1,11 @@
 import os
+import json
+
+import boto3
+from mypy_boto3_dynamodb.service_resource import DynamoDBServiceResource, Table
+import pytest
+
 from moto import mock_dynamodb
-import boto3, json, pytest
 from api.models.team import Team
 
 
@@ -21,7 +26,7 @@ class TestTeamRepository:
     @pytest.fixture
     def mock_dynamodb(self, mock_aws_creds):
         with mock_dynamodb():
-            conn = boto3.resource('dynamodb')
+            conn: DynamoDBServiceResource = boto3.resource('dynamodb')
             yield conn
 
     @pytest.fixture
@@ -31,7 +36,7 @@ class TestTeamRepository:
             dynamodb_table_schema = schema_file.read()
 
         schema = json.loads(dynamodb_table_schema)
-        table = mock_dynamodb.create_table(
+        table: Table = mock_dynamodb.create_table(
             TableName='teams',
             **schema
         )

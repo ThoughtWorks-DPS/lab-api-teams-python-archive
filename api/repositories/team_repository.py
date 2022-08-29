@@ -5,9 +5,10 @@ Abstracts dynamodb interactions so that other areas of the API
 don't need to be aware of the implementation
 """
 
-from typing import List
+from typing import List, Union
 import logging
 import boto3
+from mypy_boto3_dynamodb.service_resource import Table
 
 from api.config import settings
 from api.models.team import Team
@@ -17,16 +18,15 @@ class TeamRepository:
     Abstraction over DynamoDB for interacting with Team information
     Can take an aws resource for test mocking
     """
-    def __init__(self, aws_resource=''):
-
+    def __init__(self, dynamo_db_table: Union[Table, None]=None):
         self.logger = logging.getLogger(settings.logger)
-        if aws_resource == '':
-            dynamodb = boto3.resource('dynamodb', endpoint_url=settings.dynamodb_url)
+        if dynamo_db_table is None:
+            dynamodb = boto3.resource('dynamodb', endpoint_url=settings.aws_endpoint)
             self.table = dynamodb.Table(settings.dynamodb_table_name)
             self.table_name = settings.dynamodb_table_name
         else:
-            self.table = aws_resource
-            self.table_name = aws_resource.name
+            self.table = dynamo_db_table
+            self.table_name = dynamo_db_table.name
 
     def put(self, team: Team):
         """
@@ -52,7 +52,7 @@ class TeamRepository:
         """
         self.table.delete_item(TableName=self.table_name, Key={'name': team_name})
 
-    def get(self, team_name: str) -> Team:
+    def get(self, team_name: str) -> Union[Team, None]:
         """
         Get team information
 
