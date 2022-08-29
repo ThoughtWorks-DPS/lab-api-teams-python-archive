@@ -46,7 +46,7 @@ json_logging.init_request_instrument(api)
 
 
 if settings.subscribe_to_topic:
-    client = boto3.client("sns", endpoint_url="http://localhost:4566", region_name="us-east-1")
+    client = boto3.client("sns", endpoint_url=, region_name="us-east-1")
     logger.debug("Subscribing to topic %s", settings.topic_arn)
     response = client.subscribe(
         TopicArn=settings.topic_arn,

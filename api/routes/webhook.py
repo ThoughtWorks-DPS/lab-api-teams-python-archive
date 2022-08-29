@@ -5,6 +5,7 @@ teams api liveness and readiness endpoints.
 """
 from fastapi import APIRouter, Body, status
 from api.models.examples import EXAMPLE_MESSAGE
+from api.models.sns import MessageIn
 
 from api.shared import logger
 
@@ -30,6 +31,6 @@ async def listener(incoming_message: str = Body(
     """
     Accepts SNS Message for teams updates
     """
-    body = incoming_message
-    logger.info(body)
-    return body
+    message = MessageIn.parse_raw(incoming_message)
+    logger.info(message)
+    return message

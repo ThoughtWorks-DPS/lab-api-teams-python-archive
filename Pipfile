@@ -10,6 +10,7 @@ opentelemetry-instrumentation-fastapi = "*"
 boto3 = "*"
 json-logging = "*"
 pydantic = { version = "*", extras = ['dotenv'] }
+boto3-stubs = { version="*", extras = ['essential'] }
 
 [dev-packages]
 pre-commit = "*"
@@ -17,7 +18,6 @@ pytest = "*"
 pylint = "*"
 coverage = "*"
 moto = "*"
-boto3-stubs = { version="*", extras = ['essential'] }
 
 [requires]
 python_version = "3.9"

@@ -20,7 +20,6 @@ def mock_return_team_service(**kwargs):
 
     return return_stubbed_team_service
 
-
 class TestTeamsRoutes:
     def test_create_team_returns_201(self):
         team = Team(name='dps1')
