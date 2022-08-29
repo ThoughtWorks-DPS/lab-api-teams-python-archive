@@ -1,7 +1,7 @@
 """
 Service for managing team CRUD
 """
-from typing import List
+from typing import List, Union
 from fastapi import status
 
 from api.models.team import Team
@@ -67,7 +67,7 @@ class TeamService():
         """
         return self.repository.get_all()
 
-    def get(self, team_name: str) -> Team:
+    def get(self, team_name: str) -> Union[Team, None]:
         """
         Get a team
 
@@ -79,3 +79,16 @@ class TeamService():
             None if no team is found
         """
         return self.repository.get(team_name)
+
+    def sync_all(self) -> None:
+        """
+        Find all current teams and send a sync message for each
+        """
+
+    def sync(self, team_name: str) -> None:
+        """
+        Sync an individual team name by ensuring the correct k8s objects
+
+        Args:
+            team_name: (str) Name of the team to sync
+        """

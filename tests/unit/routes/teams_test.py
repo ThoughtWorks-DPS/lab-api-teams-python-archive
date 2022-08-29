@@ -1,24 +1,13 @@
-from unittest.mock import MagicMock
 from fastapi.testclient import TestClient
 from api.dependencies import get_team_service
 
 from api.main import api
 from api.models.team import Team
+from tests.util import mock_return_team_service
 from tests.util.builders import TeamBuilder
 
 test_client = TestClient(api)
 
-
-def mock_return_team_service(**kwargs):
-    def return_stubbed_team_service():
-        mock_team_service = MagicMock()
-        mock_team_service.create_team.return_value = kwargs.get("create_team")
-        mock_team_service.delete_team.return_value = kwargs.get("delete_team")
-        mock_team_service.get_all.return_value = kwargs.get("get_all")
-        mock_team_service.get.return_value = kwargs.get("get")
-        return mock_team_service
-
-    return return_stubbed_team_service
 
 class TestTeamsRoutes:
     def test_create_team_returns_201(self):
