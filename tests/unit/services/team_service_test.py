@@ -1,5 +1,6 @@
-import pytest
 from unittest.mock import MagicMock
+
+import pytest
 
 from api.models.team import Team
 from api.routes.exceptions import ApiException
@@ -12,12 +13,12 @@ class TestsTeamService:
         mock_team_repository = MagicMock()
         mock_team_repository.get.return_value = None
         service = TeamService(mock_team_repository)
-        test_team_name = "dps1"
+        test_team_name = "first_team"
 
         new_team = service.create_team(test_team_name)
 
         assert isinstance(new_team, Team)
-        assert new_team.name == "dps1"
+        assert new_team.name == "first_team"
 
     def test_create_team_should_give_an_error_for_duplicate_team(self):
         existing_team = Team(name='existing_team')
@@ -43,8 +44,8 @@ class TestsTeamService:
 
     def test_get_all_should_query_the_repository_and_return_teams(self):
         mock_team_repository = MagicMock()
-        team1 = TeamBuilder().with_name('dps1').build()
-        team2 = TeamBuilder().with_name('dps1').build()
+        team1 = TeamBuilder().with_name('first_team').build()
+        team2 = TeamBuilder().with_name('second_team').build()
         mock_team_repository.get_all.return_value = [team1, team2]
         service = TeamService(mock_team_repository)
 
@@ -70,6 +71,6 @@ class TestsTeamService:
         mock_team_repository.get.return_value = None
         service = TeamService(mock_team_repository)
 
-        found_team = service.get('non-existant-name')
+        found_team = service.get('non_existant_name')
 
-        assert found_team == None
+        assert found_team is None

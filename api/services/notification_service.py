@@ -1,6 +1,7 @@
 """
 Handle SNS Notifications
 """
+from mypy_boto3_sns.service_resource import Topic
 from api.models.sns import MessageIn
 from api.services.team_service import TeamService
 
@@ -15,8 +16,9 @@ class NotificationService:
     Service for managing SNS notifications both parsing and notifying
     """
 
-    def __init__(self, team_service: TeamService) -> None:
+    def __init__(self, team_service: TeamService, notification_client: Topic) -> None:
         self.team_service = team_service
+        self.notification_client = notification_client
 
     def handle(self, message: MessageIn) -> None:
         """
@@ -30,6 +32,9 @@ class NotificationService:
         """
         team_name = message.Message.Sync
         if team_name == SYNC_ALL_TEAMS:
-            self.team_service.sync_all()
+            teams = self.team_service.get_all()
+            for team in teams:
+                self.notification_client.publish(team)
+
         else:
             self.team_service.sync(team_name)

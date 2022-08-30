@@ -6,7 +6,6 @@ don't need to be aware of the implementation
 """
 
 from typing import List, Union
-import logging
 import boto3
 from mypy_boto3_dynamodb.service_resource import Table
 
@@ -19,7 +18,6 @@ class TeamRepository:
     Can take an aws resource for test mocking
     """
     def __init__(self, dynamo_db_table: Union[Table, None]=None):
-        self.logger = logging.getLogger(settings.logger)
         if dynamo_db_table is None:
             dynamodb = boto3.resource('dynamodb', endpoint_url=settings.aws_endpoint)
             self.table = dynamodb.Table(settings.dynamodb_table_name)
