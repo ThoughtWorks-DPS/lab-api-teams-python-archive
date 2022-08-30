@@ -23,3 +23,12 @@ repos:
         entry: git-secrets
         language: system
         args: ["--scan"]
+      - id: pylint
+        name: pylint
+        entry: pylint
+        language: system
+        types: [python]
+        args:
+          [
+            "api"
+        ]
