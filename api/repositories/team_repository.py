@@ -38,7 +38,7 @@ class TeamRepository:
         """
         self.table.put_item(Item=team.dict())
 
-    def delete(self, team_name: str):
+    def delete(self, team_name: str) -> Union[bool, None]:
         """
         Delete a team
 
@@ -46,9 +46,13 @@ class TeamRepository:
             team_name (str): an object represetnation of the team
 
         Returns:
-            Nothing
+            True: the team was deleted
+            None: No team to delete was found
         """
-        self.table.delete_item(TableName=self.table_name, Key={'name': team_name})
+        response = self.table.delete_item(TableName=self.table_name, Key={'name': team_name}, ReturnValues='ALL_OLD')
+        if 'Attributes' in response.keys():
+            return True
+        return None
 
     def get(self, team_name: str) -> Union[Team, None]:
         """

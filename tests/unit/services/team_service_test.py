@@ -42,6 +42,19 @@ class TestsTeamService:
         mock_team_repository.delete.assert_called_with(existing_team_name)
         assert result
 
+    def test_delete_team_should_give_an_error_for_already_deleted_team(self):
+        deleted_team = 'some_team'
+        mock_team_repository = MagicMock()
+        mock_team_repository.delete_item.return_value = None
+
+        service = TeamService(mock_team_repository)
+
+        result = service.delete_team(deleted_team)
+
+        mock_team_repository.delete.assert_called_with(deleted_team)
+        with pytest.raises(ApiException):
+            service.delete_team('some_team')
+
     def test_get_all_should_query_the_repository_and_return_teams(self):
         mock_team_repository = MagicMock()
         team1 = TeamBuilder().with_name('first_team').build()

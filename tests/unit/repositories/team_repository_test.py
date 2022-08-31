@@ -61,6 +61,12 @@ class TestTeamRepository:
         assert found_team is not None
         assert found_team.name == test_team.name
 
+    def test_delete_team_should_return_none_when_already_deleted(self, mock_dynamo_table):
+        repository = TeamRepository(mock_dynamo_table)
+        test_team = Team(name="something")
+        deleted_team = repository.delete(test_team.name)
+        assert deleted_team is None
+
     def test_delete_team_should_remove_from_dynamodb(self, mock_dynamo_table):
         repository =  TeamRepository(mock_dynamo_table)
         test_team = Team(name="dps1")

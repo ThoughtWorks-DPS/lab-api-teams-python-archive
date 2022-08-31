@@ -27,6 +27,14 @@ class TestTeamsRoutes:
 
         assert response.status_code == 204
 
+    def test_delete_team_returns_404(self):
+        team = Team(name='something')
+        api.dependency_overrides[get_team_service] = mock_return_team_service(
+                delete_team=None)
+        response = test_client.delete(f'/v1/teams/{team.name}')
+
+        assert response.status_code == 404
+
     def test_root_lists_all_teams(self):
         team1 = Team(name='dps1')
         team2 = Team(name='dps2')

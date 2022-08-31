@@ -42,7 +42,7 @@ class TeamService():
                            title=DUPLICATE_TEAM_TITLE
                            )
 
-    def delete_team(self, team_name:  str) -> bool:
+    def delete_team(self, team_name:  str) -> Union[bool, None]:
         """
         Delete a team
 
@@ -50,10 +50,10 @@ class TeamService():
             team_name (str): Name of team to be deleted
 
         Returns:
-            bool if the deletion was successful
+            True if the deletion was successful
+            None if no team found to delete
         """
-        self.repository.delete(team_name)
-        return True
+        return self.repository.delete(team_name)
 
     def get_all(self) -> List[Team]:
         """

@@ -59,7 +59,13 @@ async def create_team(team: Team, team_service=Depends(get_team_service)):
 async def delete_team(team_name: str, team_service=Depends(get_team_service)):
     """
     Returns 204 if successfully deleted
+    Returns 404 if team to delete was not found
     """
     logger.debug('Deleting team: %s', team_name)
-    team_service.delete_team(team_name)
+    team = team_service.delete_team(team_name)
+    if team is None:
+        raise ApiException(detail=NO_TEAM_ERROR_DETAIL.format(team_name),
+                           status_code=status.HTTP_404_NOT_FOUND,
+                           title=TEAM_NOT_FOUND_TITLE
+                           )
     return {}
