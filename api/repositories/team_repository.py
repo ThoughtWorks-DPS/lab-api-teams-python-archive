@@ -49,7 +49,11 @@ class TeamRepository:
             True: the team was deleted
             None: No team to delete was found
         """
-        response = self.table.delete_item(TableName=self.table_name, Key={'name': team_name}, ReturnValues='ALL_OLD')
+        response = self.table.delete_item(
+                TableName=self.table_name,
+                Key={'name': team_name},
+                ReturnValues='ALL_OLD'
+        )
         if 'Attributes' in response.keys():
             return True
         return None
