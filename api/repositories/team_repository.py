@@ -50,7 +50,6 @@ class TeamRepository:
             None: No team to delete was found
         """
         response = self.table.delete_item(
-                TableName=self.table_name,
                 Key={'name': team_name},
                 ReturnValues='ALL_OLD'
         )
