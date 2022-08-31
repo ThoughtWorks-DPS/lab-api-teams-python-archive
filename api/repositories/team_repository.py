@@ -55,7 +55,7 @@ class TeamRepository:
                 ReturnValues='ALL_OLD'
         )
         if 'Attributes' in response.keys() and 'name' in response['Attributes'].keys():
-            return True 
+            return True
         return None
 
     def get(self, team_name: str) -> Union[Team, None]:
