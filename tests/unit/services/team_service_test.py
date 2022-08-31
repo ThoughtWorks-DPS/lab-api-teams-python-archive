@@ -45,7 +45,7 @@ class TestsTeamService:
     def test_delete_team_should_give_an_error_for_already_deleted_team(self):
         deleted_team = 'some_team'
         mock_team_repository = MagicMock()
-        mock_team_repository.delete_item.return_value = None
+        mock_team_repository.delete.return_value = None
         service = TeamService(mock_team_repository)
         result = service.delete_team(deleted_team)
         mock_team_repository.delete.assert_called_with(deleted_team)
