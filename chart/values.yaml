@@ -8,7 +8,7 @@ image:
   repository: ghcr.io/thoughtworks-dps/lab-api-teams
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "dev.74390a1"
+  tag: "dev.8dcc914"
 
 imagePullSecrets:
   - name: ghcr

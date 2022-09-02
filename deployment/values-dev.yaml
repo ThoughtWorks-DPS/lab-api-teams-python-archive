@@ -1,0 +1,6 @@
+---
+hosts:
+  - teams.sandbox-us-east-2.twdps.io 
+gateways:
+  - istio-system/dev-twdps-io-gateway
+

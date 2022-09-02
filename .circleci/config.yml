@@ -4,6 +4,7 @@ version: 2.1
 orbs:
   python: twdps/python-api@0.1.0
   cosign: twdps/cosign@0.1.0
+  kube: twdps/kube-ops@0.3.0
 
 # ==== global pipeline parameters
 
@@ -24,6 +25,10 @@ parameters:
     description: publish to this registry
     type: string
     default: ghcr.io/thoughtworks-dps
+  executor-image:
+    description: image to use for local jobs
+    type: string
+    default: twdps/circleci-kube-ops:alpine-0.7.0
 
 on-push-main: &on-push-main
   branches:
@@ -86,3 +91,39 @@ workflows:
           requires:
             - static-code-analysis
           filters: *on-push-main
+  # development-deploy-wip:
+  #   jobs:
+  #     - deploy:
+  #         context: << pipeline.parameters.context >>
+  #         name: Deploy to Dev Namespace
+  #         cluster: prod-us-east-1
+  #         environment: 
+
+jobs:
+  deploy:
+    docker:
+      - image: << pipeline.parameters.executor-image >>
+    parameters:
+      cluster:
+        description: target kubernetes cluster
+        type: string
+      environment:
+        description: values environment to use
+        type: string
+    steps:
+      - run:
+          name: pull kubeconfig
+          command: |
+            mkdir -p ~/.kube
+            ENV=<< parameters.cluster >> op inject -i tpl/kubeconfig.tpl -o ~/.kube/config
+      - run:
+          name: Deploy via Helm
+          command: |
+            helm upgrade
+            --install
+            --namespace twdps-core-labs-team-<< parameters.environment >>
+            --values deployment/values-<< parameters.environment >>.yaml
+            --cleanup-on-fail
+            --atomic
+            teams
+            ./chart
